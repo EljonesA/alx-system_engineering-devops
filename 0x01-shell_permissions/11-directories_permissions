@@ -1,2 +1,2 @@
 #!/bin/bash
-chmod -R -type d 777 .
+chmod -R 777 .
