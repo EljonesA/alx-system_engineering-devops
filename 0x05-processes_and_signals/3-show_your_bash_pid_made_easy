@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Get the list of process directories in /proc >>contains bash
+
+process_dirs=("/proc"/*/)
+for dir in "${process_dirs[@]}"; do # loop through project dirs
+    pid=$(basename "$dir") # get PID from dir name
+
+    # Check if cmdline file exists and contains "bash"
+    if [ -f "$dir/cmdline" ]; then
+        cmdline=$(tr '\0' ' ' < "$dir/cmdline")
+        if [[ $cmdline == *bash* ]]; then
+            # Extract the process name (usually the first part of cmdline)
+            process_name=$(echo "$cmdline" | awk '{print $1}')
+            echo "$pid $process_name"
+        fi
+    fi
+done
