@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# check if the script as root (required forediting /etc/hosts)
+if [ "$EUID" -ne 0 ]; then
+	echo "Please run this script as root."
+	exit 1
+fi
+
+# define desired IP address mappings
+localhost_mapping="127.0.0.2 localhost"
+facebook_mapping="8.8.8.8 facebook.com"
+
+# update /etc/hosts file
+echo "$localhost_mapping" >> /etc/hosts
+echo "$facebook_mapping" >> /etc/hosts
+
+# restart networking to apply changes
+# systemctl restart networking
