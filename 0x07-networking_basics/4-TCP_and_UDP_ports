@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# script that displays listening ports
+echo "Active Internet connections (only servers)"
+echo "Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name"
+
+# netstat lists listening tcp & udp (-tu) ports
+ss -tuln | awk '
+# awk function that takes PID & returns the program name (using ps command)
+function get_program_name(pid)
+{
+	cmd = "ps -p " pid " -o comm="
+	cmd | getline program
+	close(cmd)
+	return program
+}
+# filter lines to include only listeing sockets
+$1 == "LISTEN" {
+
+# extract protocol, local address & port
+split($5, local_parts, ":")
+protocol = $2
+local_address = local_parts[1]
+port = local_parts[2]
+
+# get PID & program name
+cmd = "ss -ptln | grep " port " | awk -F, '{print \$2'"
+cmd | getline pid
+close(cmd)
+program = get_program_name(pid)
+
+# print results
+printf "%-5s %-9s %-22s %-22s %-12s %s\n", protocol, "0", "0", local_address, "LISTEN", pid "/" program
+}
+'
