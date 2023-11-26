@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# script that uses ssh to connect to your server using the
+#  private key ~/.ssh/school with the user ubuntu.
+
+private_key_path=~/.ssh/school
+remote_user=ubuntu
+remote_host=8.8.8.8
+
+# command to connect using single char flag
+ssh -i "$private_key_path" $remote_user@$remote_host
