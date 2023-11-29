@@ -2,8 +2,10 @@
 # Install ndinx web server on our server
 
 # install nginx
-sudo apt-get -y update
-sudo apt-get -y install nginx
-sudo service nginx start
+apt-get -y update
+apt-get -y install nginx
 
-echo 'Hello World!' > sudo tee /var/www/html/index.html
+echo 'Hello World!' > /var/www/html/index.html
+
+# start the server
+service nginx start
