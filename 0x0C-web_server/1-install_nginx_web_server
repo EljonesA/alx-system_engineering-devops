@@ -2,24 +2,8 @@
 # Install ndinx web server on our server
 
 # install nginx
-sudo apt-get update
-sudo apt-get install -y nginx
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo service nginx start
 
-# Create a simple HTML page
-echo "<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello World Page</title>
-</head>
-<body>
-     <h1>Hello World!</h1>
-</body>
-</html>" | sudo tee /var/www/html/index.html > /dev/null
-
-# configure nginx to listen on port 80
-# using sed (straem editor) to edit nginx configuration file at /etc/..
-sudo sed -i 's/80 default_server/80 default_server;/g' /etc/nginx/sites-available/default
-
-# restart ngix using service
-sudo service nginx restart
-
+echo 'Hello World!' > sudo tee /var/www/html/index.html
