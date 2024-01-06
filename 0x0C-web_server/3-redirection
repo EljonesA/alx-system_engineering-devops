@@ -9,4 +9,7 @@ echo 'Hello World!' > /var/www/html/index.nginx-debian.html
 # redirection
 sed -i "s/server_name _;/&;\n\trewrite ^\/redirect_me https:\/\/www.linkedin.com\/in\/eljones-odongo\/ permanent;/" /etc/nginx/sites-available/default
 
+# Ensure the response code is set to 301
+sed -i "s/# listen 80 default_server;/return 301;/" /etc/nginx/sites-available/default
+
 service nginx restart
