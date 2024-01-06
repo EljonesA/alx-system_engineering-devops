@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Install server THEN perform redirection to another page
+
+apt-get -y update
+apt-get -y install nginx
+ufw allow 'Nginx HTTP'
+echo 'Hello World!' > /var/www/html/index.nginx-debian.html
+
+# redirection
+sed -i "s/server_name _;/&;\n\trewrite ^\/redirect_me https:\/\/www.linkedin.com\/in\/eljones-odongo\/ permanent;/" /etc/nginx/sites-available/default
+
+service nginx restart
