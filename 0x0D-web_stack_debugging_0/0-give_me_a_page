@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# webstack debugging
+
+docker exec -it 47ca3994a491 /bin/bash
+cd /var/www/html || exit
+echo "Hello Holberton" > index.html
+service apache2 restart
+exit
