@@ -6,24 +6,7 @@ apt-get -y update
 apt-get -y install nginx
 
 # set efault page content
-echo 'Hello World!' > /var/www/html/index.nginx-debian.html
-
-# Replace the default nginx configuration to serve the custom HTML page
-cat >/etc/nginx/sites-available/default <<EOL
-server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
-
-	server_name _;
-
-	location / {
-		try_files $uri $uri/ =404;
-	}
-}
-EOL
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
 
 # restart the server to apply changes
-service nginx restart
+service nginx start
