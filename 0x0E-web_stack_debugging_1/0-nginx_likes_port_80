@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# This script checks if Nginx is listening on port 80 and configures it to listen if not
+
+# Check if Nginx is listening on port 80
+nginx_listening=$(netstat -tuln | grep ':80 ')
+
+# Check if Nginx is already listening on port 80
+if [ -z "$nginx_listening" ]; then
+    echo "Nginx is not listening on port 80. Configuring..."
+    # Update Nginx configuration to listen on port 80
+    sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
+
+    # Restart Nginx service
+    systemctl restart nginx
+
+    # Check if Nginx is now listening on port 80
+    nginx_listening=$(netstat -tuln | grep ':80 ')
+    if [ -z "$nginx_listening" ]; then
+        echo "Failed to configure Nginx to listen on port 80."
+    else
+        echo "Nginx is now listening on port 80."
+    fi
+else
+    echo "Nginx is already listening on port 80."
+fi
