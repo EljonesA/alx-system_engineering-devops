@@ -1,12 +1,32 @@
 #!/usr/bin/env bash
 # Install ndinx web server on our server
 
-# update package list, install nginx, allow through firewall
+# Update package lists
 apt-get -y update
-apt-get -y install nginx
 
-# set efault page content
-echo "Hello World!" > /var/www/html/index.html
+# Install nginx
+apt-get install -y nginx
 
-# restart the server to apply changes
-service nginx restart
+# Configure nginx to listen on port 80 and return "Hello World!" at root
+echo '
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm;
+
+    server_name _;
+
+    location / {
+        echo "Hello World!";
+        include /etc/nginx/mime.types;
+    }
+}
+' > /etc/nginx/sites-available/default
+
+# Restart nginx without using systemctl
+kill -s HUP $(pgrep nginx)
+
+# Exit script
+exit 0
