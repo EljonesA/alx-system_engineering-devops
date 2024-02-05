@@ -7,7 +7,7 @@ apt-get -y update
 # Install nginx
 apt-get install -y nginx
 
-# Configure nginx to listen on port 80 and return "Hello World!" at root
+# Configure nginx to listen on port 80
 echo '
 server {
     listen 80 default_server;
@@ -20,13 +20,9 @@ server {
 
     location / {
         echo "Hello World!";
-        include /etc/nginx/mime.types;
     }
 }
 ' > /etc/nginx/sites-available/default
 
 # Restart nginx without using systemctl
-kill -s HUP $(pgrep nginx)
-
-# Exit script
-exit 0
+service Nginx restart
