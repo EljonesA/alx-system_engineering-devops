@@ -6,7 +6,7 @@ apt-get -y update
 apt-get -y install nginx
 
 # set efault page content
-echo "Hello World!" > /var/www/html/index.nginx-debian.html
+echo "Hello World!" > /var/www/html/index.html
 
 # restart the server to apply changes
-service nginx start
+service nginx restart
