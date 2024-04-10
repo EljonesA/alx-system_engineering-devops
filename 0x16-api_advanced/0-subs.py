@@ -15,17 +15,12 @@ def number_of_subscribers(subreddit):
     response = requests.get(url, headers=custom_agent, allow_redirects=False)
 
     # ensure response successful / valid subreddit
-    if response.status_code != 200:
+    if response.status_code == 200:
+        # parse JSON response to python dictionary
+        subreddit_info = response.json()
+        # retrieve subscribers from the dictionary response
+        subscribers = subreddit_info['data']['subscribers']
+        return subscribers
+    else:
+        # invalid subreddits or request fails
         return 0
-
-    # parse response content into a python dictionary
-    subreddit_info = response.json()
-    if 'data' not in subreddit_info:
-        return 0
-    if 'subscribers' not in subreddit_info.get('data'):
-        return 0
-
-    # retrieve subscribers from the dictionary
-    subscribers = subreddit_info['data']['subscribers']
-
-    return subscribers
