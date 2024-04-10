@@ -10,8 +10,9 @@ def number_of_subscribers(subreddit):
 
     url = f'https://www.reddit.com/r/{subreddit}/about.json'
 
-    # request with custome user agent
-    response = requests.get(url, headers={'User-Agent': 'chrome/1.0'})
+    # http request with custom user agent
+    custom_agent = {'User-Agent':  'chrome/1.0'}
+    response = requests.get(url, headers=custom_agent, allow_redirects=False)
 
     # ensure response successful / valid subreddit
     if response.status_code != 200:
@@ -19,6 +20,10 @@ def number_of_subscribers(subreddit):
 
     # parse response content into a python dictionary
     subreddit_info = response.json()
+    if 'data' not in subreddit_info:
+        return 0
+    if 'subscribers' not in subreddit_info.get('data'):
+        return 0
 
     # retrieve subscribers from the dictionary
     subscribers = subreddit_info['data']['subscribers']
