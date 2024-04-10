@@ -8,7 +8,7 @@ import sys
 def top_ten(subreddit):
     ''' Retrieves number of subscribers of a given subreddit '''
 
-    url = f'https://www.reddit.com/r/{subreddit}/top.json?limit=10'
+    url = f'https://www.reddit.com/r/{subreddit}/hot.json'
 
     # http request with custom user agent
     custom_agent = {'User-Agent':  'chrome/1.0'}
@@ -20,7 +20,8 @@ def top_ten(subreddit):
         subreddit_info = response.json()
 
         # retrieve top 10 posts
-        top_posts = subreddit_info['data']['children']
+        top_posts = subreddit_info['data']['children'][:10]
+
         for post in top_posts:
             print(post['data']['title'])
     else:
