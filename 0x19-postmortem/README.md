@@ -19,8 +19,9 @@ From 2nd Feb 4pm EAT to 5th Feb 11am EAT, the loan application system experience
 - We are setting up several reviews and approvals before codebases are updated.
 - We are creating automatic alerting systems for immediate response to future outages.
 
-**apologies to our users,**
-loan-app Team
 
-* Author:
+**Apologies to our users,**
+loan-app Team.
+
+# Author:
 - Eljones Odongo
